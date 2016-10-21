@@ -15,28 +15,47 @@
 #include <iostream>
 
 #include "WaterPump.h"
+#include "AdcMcp3202.h"
+#include "BcmInitializer.h"
 
 /*
  * 
  */
 int main(int argc, char** argv)
 {
+	// Enable bcm for the life of main function
+	BcmInitializer bcm;
+	
+	AdcMcp3202 adcSpi;
+	
 	WaterPump waterPump;
 	waterPump.initGPIO();
 	
 	while (1)
 	{
-		std::cout << "1\tTurn On " << "\r\n" 
-				<< "2\tTurn Off" << "\r\n";
+		std::cout << "r\tTake reading " << "\r\n"
+				<< "1\tTurn Pump On " << "\r\n" 
+				<< "2\tTurn Pump Off" << "\r\n" 
+				<< "x\tExit" << "\r\n";
 		char input = 0;
 		std::cin.get(input);
-		if (input == '1')
+		if (input == 'r')
+		{
+			float result = adcSpi.convertToFloat(adcSpi.readSpi());
+			
+			std::cout << "Reading: " << result << "\r\n";
+		}
+		else if (input == '1')
 		{
 			waterPump.turnOn();
 		}
 		else if (input == '2')
 		{
 			waterPump.turnOff();
+		}
+		else if (input == 'x')
+		{
+			break;
 		}
 	}
 	

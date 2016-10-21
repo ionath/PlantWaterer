@@ -28,11 +28,6 @@ WaterPump::~WaterPump() {
 
 void WaterPump::initGPIO()
 {
-	if (!bcm2835_init())
-	{
-		return;
-	}
-
     // Set the pin to be an output
     bcm2835_gpio_fsel(PIN_PUMP, BCM2835_GPIO_FSEL_OUTP);
 	
