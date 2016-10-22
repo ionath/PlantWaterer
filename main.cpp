@@ -14,9 +14,89 @@
 #include <cstdlib>
 #include <iostream>
 
+#include <thread>
+#include <sstream>
+#include <string>
+
 #include "WaterPump.h"
 #include "AdcMcp3202.h"
 #include "BcmInitializer.h"
+#include "NetworkListener.h"
+
+template <class T>
+std::string ToString(T value)
+{
+	std::ostringstream ostrm;
+	ostrm << value;
+	return ostrm.str();
+}
+
+class MonitorConnections
+{
+public:
+	MonitorConnections(AdcMcp3202* adcSpi, WaterPump* waterPump, int portNo)
+		: m_adcSpi(adcSpi)
+		, m_waterPump(waterPump)
+	{
+		networkListener.SetupSocket(portNo);
+	}
+		
+	void monitorConnections()
+	{
+		while (1)
+		{
+			auto networkSession = networkListener.ListenForConnection();
+			
+			if (networkSession.isValidSocket())
+			{
+				while (1)
+				{
+					auto readStr = networkSession.readFromConnection();
+					if (readStr == "GET READING")
+					{
+						auto reading = m_adcSpi->convertToFloat(m_adcSpi->readSpi());
+						auto readingStr = std::string("READING ") + ToString(reading);
+						networkSession.writeToConnection(readingStr);
+					}
+					else if (readStr == "PUMP ON")
+					{
+						m_waterPump->turnOn();
+					}
+					else if (readStr == "PUMP OFF")
+					{
+						m_waterPump->turnOff();
+					}
+				}
+			}
+		}
+	}
+	
+	void asyncMonitorConnections()
+	{
+		// Warning! maybe destroying a previous thread
+		m_thread = std::thread(staticMonitorConnections, this);
+	}
+	
+private:
+	AdcMcp3202* m_adcSpi;
+	WaterPump* m_waterPump;
+	
+	NetworkListener networkListener;
+	
+	std::thread m_thread;
+	
+private:
+	
+	static void staticMonitorConnections(MonitorConnections* self)
+	{
+		if (self)
+		{
+			self->monitorConnections();
+		}
+	}
+	
+};
+
 
 /*
  * 
@@ -30,6 +110,10 @@ int main(int argc, char** argv)
 	
 	WaterPump waterPump;
 	waterPump.initGPIO();
+	
+	// Run monitorConnections in a different thread
+	MonitorConnections monitorConnections(&adcSpi, &waterPump, 27015);
+	monitorConnections.asyncMonitorConnections();
 	
 	while (1)
 	{
