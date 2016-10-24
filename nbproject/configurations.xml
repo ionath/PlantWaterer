@@ -6,8 +6,10 @@
                    projectFiles="true">
       <itemPath>AdcMcp3202.h</itemPath>
       <itemPath>BcmInitializer.h</itemPath>
+      <itemPath>MonitorConnections.h</itemPath>
       <itemPath>NetworkListener.h</itemPath>
       <itemPath>NetworkSession.h</itemPath>
+      <itemPath>ToString.h</itemPath>
       <itemPath>WaterPump.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -19,6 +21,7 @@
                    projectFiles="true">
       <itemPath>AdcMcp3202.cpp</itemPath>
       <itemPath>BcmInitializer.cpp</itemPath>
+      <itemPath>MonitorConnections.cpp</itemPath>
       <itemPath>NetworkListener.cpp</itemPath>
       <itemPath>NetworkSession.cpp</itemPath>
       <itemPath>WaterPump.cpp</itemPath>
@@ -63,6 +66,10 @@
       </item>
       <item path="BcmInitializer.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="MonitorConnections.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MonitorConnections.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="NetworkListener.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="NetworkListener.h" ex="false" tool="3" flavor2="0">
@@ -70,6 +77,8 @@
       <item path="NetworkSession.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="NetworkSession.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ToString.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="WaterPump.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -106,6 +115,10 @@
       </item>
       <item path="BcmInitializer.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="MonitorConnections.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MonitorConnections.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="NetworkListener.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="NetworkListener.h" ex="false" tool="3" flavor2="0">
@@ -113,6 +126,8 @@
       <item path="NetworkSession.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="NetworkSession.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ToString.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="WaterPump.cpp" ex="false" tool="1" flavor2="0">
       </item>
